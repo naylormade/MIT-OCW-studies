@@ -1,18 +1,5 @@
-# Problem Set 2, hangman.py
-# Name: 
-# Collaborators:
-# Time spent:
-
-# Hangman Game
-# -----------------------------------
-# Helper code
-# You don't need to understand this helper code,
-# but you will have to know how to use the functions
-# (so be sure to read the docstrings!)
 import random
 import string
-
-WORDLIST_FILENAME = "words.txt"
 
 
 def load_words():
@@ -23,15 +10,11 @@ def load_words():
     take a while to finish.
     """
     print("Loading word list from file...")
-    # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r')
-    # line: string
+    inFile = open("words.txt", 'r')
     line = inFile.readline()
-    # wordlist: list of strings
     wordlist = line.split()
-    print("  ", len(wordlist), "words loaded.")
+    print(f'    {len(wordlist)} words loaded.')
     return wordlist
-
 
 
 def choose_word(wordlist):
@@ -42,9 +25,6 @@ def choose_word(wordlist):
     """
     return random.choice(wordlist)
 
-# end of helper code
-
-# -----------------------------------
 
 # Load the list of words into the variable wordlist
 # so that it can be accessed from anywhere in the program
@@ -60,8 +40,10 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    for letter in letters_guessed:
+      if letter not in secret_word:
+        return False
+    return True
 
 
 
@@ -72,8 +54,7 @@ def get_guessed_word(secret_word, letters_guessed):
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
 
 
 
