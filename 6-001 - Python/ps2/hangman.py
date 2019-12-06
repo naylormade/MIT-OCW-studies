@@ -9,11 +9,11 @@ def load_words():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    print("Loading word list from file...")
+    #print("Loading word list from file...")
     inFile = open("words.txt", 'r')
     line = inFile.readline()
     wordlist = line.split()
-    print(f'    {len(wordlist)} words loaded.')
+    #print(f'    {len(wordlist)} words loaded.')
     return wordlist
 
 
@@ -46,7 +46,6 @@ def is_word_guessed(secret_word, letters_guessed):
     return True
 
 
-
 def get_guessed_word(secret_word, letters_guessed):
     '''
     secret_word: string, the word the user is guessing
@@ -54,9 +53,17 @@ def get_guessed_word(secret_word, letters_guessed):
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
     '''
-    
+    listy = []
+    for letter in secret_word:
+      if letter in letters_guessed:
+        listy.append(letter)
+      elif letter is " ":
+        listy.append(" ")
+      else:
+        listy.append("_")
+    return ''.join(listy)
 
-
+get_guessed_word("christmas day", ['c','i','b','r'," "])
 
 def get_available_letters(letters_guessed):
     '''
