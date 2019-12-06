@@ -26,8 +26,6 @@ def choose_word(wordlist):
     return random.choice(wordlist)
 
 
-# Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
 wordlist = load_words()
 
 
@@ -40,8 +38,8 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    for letter in letters_guessed:
-      if letter not in secret_word:
+    for letter in secret_word:
+      if letter not in letters_guessed:
         return False
     return True
 
@@ -63,7 +61,6 @@ def get_guessed_word(secret_word, letters_guessed):
         listy.append("_")
     return ''.join(listy)
 
-get_guessed_word("christmas day", ['c','i','b','r'," "])
 
 def get_available_letters(letters_guessed):
     '''
@@ -71,9 +68,7 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-    
+    return ''.join([x for x in string.ascii_lowercase if x not in letters_guessed])
     
 
 def hangman(secret_word):
@@ -101,9 +96,29 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    letters_guessed = []
+    word = choose_word(wordlist)
+    num_guesses = 6
+    print("Welcome to Hangman")
+    print(f'The secret word is {len(word)} characters long and you have {num_guesses} guesses.')
 
+    while num_guesses > 0:
+      
+      print(f'Guesses left: {num_guesses}')
+      print(f'Letters that have not been used: {get_available_letters(letters_guessed)}')
+      guess = input("Please choose a letter to guess: ").lower()
+      while guess not in string.ascii_lowercase:
+        guess = input("Please choose a LETTER to guess: ").lower()
+      letters_guessed.append(guess)
+      print(get_guessed_word(word, letters_guessed))
+
+      if is_word_guessed(word, letters_guessed):
+        break
+      num_guesses -= 1
+      print("\n")
+      if num_guesses == 0:
+        print("You have used all your guesses!")
+        print(f'The word is {word}.')
 
 
 # When you've completed your hangman function, scroll down to the bottom
