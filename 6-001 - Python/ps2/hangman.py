@@ -140,10 +140,17 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
-
+    if len(my_word.strip()) != len(other_word):
+      #print("False cus length")
+      return False
+    for letter in my_word:
+      if letter == "_":
+        continue
+      if letter not in other_word:
+        #print("False cus no match")
+        return False
+    #print("True")
+    return True
 
 def show_possible_matches(my_word):
     '''
@@ -155,8 +162,7 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
 
 
 
@@ -205,7 +211,7 @@ if __name__ == "__main__":
     # uncomment the following two lines.
     
     secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    #hangman(secret_word)
 
 ###############
     
