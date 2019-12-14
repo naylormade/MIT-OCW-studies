@@ -1,5 +1,6 @@
 import random
 import string
+import re
 
 
 def load_words():
@@ -162,8 +163,21 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    
+    pattern = " "
 
+    for ch in my_word:
+      if ch in string.ascii_lowercase:
+        pattern += ch
+      elif ch == "_":
+        pattern += "[a-z]"
+      else:
+        break  # shouldn't get here
+    # add space to ensure it is an actual word
+    pattern += " "
+    potential_matching_words = set(re.findall(pattern, ' '.join(wordlist)))
+    stripped = [x.strip() for x in potential_matching_words]
+    print(f'hints: {stripped}')
+    return sorted(stripped)
 
 
 def hangman_with_hints(secret_word):
@@ -211,7 +225,7 @@ if __name__ == "__main__":
     # uncomment the following two lines.
     
     secret_word = choose_word(wordlist)
-    #hangman(secret_word)
+    hangman(secret_word)
 
 ###############
     
