@@ -1,17 +1,8 @@
-# 6.0001 Problem Set 3
-#
-# The 6.0001 Word Game
-# Created by: Kevin Luu <luuk> and Jenna Wiens <jwiens>
-#
-# Name          : <your name>
-# Collaborators : <your collaborators>
-# Time spent    : <total time>
-
 import math
 import random
 import string
 
-VOWELS = 'aeiou'
+VOWELS = 'aeiou*'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
@@ -35,7 +26,7 @@ def load_words():
     
     print("Loading word list from file...")
     # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r')
+    inFile = open("words.txt", 'r')
     # wordlist: list of strings
     wordlist = []
     for line in inFile:
@@ -91,8 +82,12 @@ def get_word_score(word, n):
     n: int >= 0
     returns: int >= 0
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    second_component = (7*len(word) - 3*(n-len(word)))
+    word_sum = 0
+    for ch in word:
+        ch = ch.lower()
+        word_sum += SCRABBLE_LETTER_VALUES[ch]
+    return word_sum * 1 if 1 > second_component else word_sum * second_component
 
 #
 # Make sure you understand how this function works and what it does!
@@ -136,7 +131,7 @@ def deal_hand(n):
     hand={}
     num_vowels = int(math.ceil(n / 3))
 
-    for i in range(num_vowels):
+    for i in range(num_vowels - 1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
     
@@ -144,6 +139,7 @@ def deal_hand(n):
         x = random.choice(CONSONANTS)
         hand[x] = hand.get(x, 0) + 1
     
+    hand["*"] = 1
     return hand
 
 #
@@ -167,9 +163,14 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-
-    pass  # TO DO... Remove this line when you implement this function
-
+    new_hand = hand.copy()
+    for ch in word:
+        ch = ch.lower()
+        if ch in new_hand and new_hand[ch] > 1:
+            new_hand[ch] -= 1
+        elif ch in new_hand and new_hand[ch] == 1:
+            del new_hand[ch]
+    return new_hand
 #
 # Problem #3: Test word validity
 #
@@ -184,8 +185,17 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    new_hand = hand.copy()
 
-    pass  # TO DO... Remove this line when you implement this function
+    for ch in word:
+        ch = ch.lower()
+        if ch in new_hand and new_hand[ch] > 1:
+            new_hand[ch] -= 1
+        elif ch in new_hand and new_hand[ch] == 1:
+            del new_hand[ch]
+        else:
+            return False
+    return True
 
 #
 # Problem #5: Playing a hand
@@ -198,7 +208,7 @@ def calculate_handlen(hand):
     returns: integer
     """
     
-    pass  # TO DO... Remove this line when you implement this function
+    return [x for x in hand.values()]
 
 def play_hand(hand, word_list):
 
