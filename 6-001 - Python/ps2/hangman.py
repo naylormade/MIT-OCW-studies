@@ -208,7 +208,34 @@ def hangman_with_hints(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    letters_guessed = []
+    word = choose_word(wordlist)
+    num_guesses = 6
+    print("Welcome to Hangman")
+    print(f'The secret word is {len(word)} characters long and you have {num_guesses} guesses.')
+
+    while num_guesses > 0:
+      
+      print(f'Guesses left: {num_guesses}')
+      print(f'Letters that have not been used: {get_available_letters(letters_guessed)}')
+      guess = "$"
+      while guess not in string.ascii_lowercase:
+        guess = input("Please choose a letter to guess: ").lower()  
+        if guess == "*":
+          show_possible_matches(get_guessed_word(word, letters_guessed))
+          continue       
+      letters_guessed.append(guess)
+      print(get_guessed_word(word, letters_guessed))
+      
+      
+      if is_word_guessed(word, letters_guessed):
+        print("Congrats you guessed it!")
+        break
+      num_guesses -= 1
+      print("\n")
+      if num_guesses == 0:
+        print("You have used all your guesses!")
+        print(f'The word is {word}.')
 
 
 
@@ -224,13 +251,13 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    #secret_word = choose_word(wordlist)
+    #hangman(secret_word)
 
 ###############
     
     # To test part 3 re-comment out the above lines and 
     # uncomment the following two lines. 
     
-    #secret_word = choose_word(wordlist)
-    #hangman_with_hints(secret_word)
+    secret_word = choose_word(wordlist)
+    hangman_with_hints(secret_word)
