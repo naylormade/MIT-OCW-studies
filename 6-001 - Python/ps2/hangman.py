@@ -215,21 +215,18 @@ def hangman_with_hints(secret_word):
     print(f'The secret word is {len(word)} characters long and you have {num_guesses} guesses.')
 
     while num_guesses > 0:
-      
+      print('--------------')
       print(f'Guesses left: {num_guesses}')
-      print(f'Letters that have not been used: {get_available_letters(letters_guessed)}')
+      print(f'Available letters: {get_available_letters(letters_guessed)}')
       guess = "$"
       while guess not in string.ascii_lowercase:
-        guess = input("Please choose a letter to guess: ").lower()  
+        guess = input("Please guess a letter: ").lower()
         if guess == "*":
           show_possible_matches(get_guessed_word(word, letters_guessed))
-          continue       
       letters_guessed.append(guess)
       print(get_guessed_word(word, letters_guessed))
-      
-      
+
       if is_word_guessed(word, letters_guessed):
-        print("Congrats you guessed it!")
         break
       num_guesses -= 1
       print("\n")
